@@ -4,7 +4,7 @@ import React, { useEffect, useContext } from "react";
 import { Web3Context } from "./web3";
 import { ethers } from "ethers";
 import { useSetChain, useWallets } from "@web3-onboard/react";
-import ABI from "@/artifacts/Eboogotchi.json";
+import ABI from "@/artifacts/eboogotchi.json";
 
 export const EboogotchiContext = React.createContext<EboogotchiStats>({});
 
