@@ -6,13 +6,20 @@ import { ethers } from "ethers";
 import { useSetChain, useWallets } from "@web3-onboard/react";
 import ABI from "@/artifacts/eboogotchi.json";
 
-export const EboogotchiContext = React.createContext<EboogotchiStats>({});
+export const EboogotchiContext = React.createContext<{
+  stats: EboogotchiStats;
+  loading: boolean;
+  score: number;
+}>({ stats: {}, loading: true , score: 0});
 
 const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
   const { web3 } = useContext(Web3Context);
   let _buffer: EboogotchiStats;
   const [stats, setStats] = React.useState<EboogotchiStats>({});
-  const [contract, setContract] = React.useState<ethers.Contract>();
+  let contract: ethers.Contract;
+  const [loading, setLoading] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
+  const [score, setScore] = React.useState(0);
   const wallets = useWallets();
 
   function setHungry(value: number) {
@@ -42,7 +49,7 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
   function setDirty(value: number) {
     _buffer = {
       ..._buffer,
-      dirty: { name: "Dirtyness", value },
+      dirty: { name: "Dirtiness", value },
     };
     setStats(_buffer);
   }
@@ -53,24 +60,23 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
   }
 
   async function updateState() {
-    if (web3 && wallets[0] && wallets[0].accounts) {
-      setValues({
-        hungry: { name: "Hunger", value: 0 },
-        tired: { name: "Tiredness", value: 0 },
-        bored: { name: "Boredom", value: 0 },
-        dirty: { name: "Dirtyness", value: 0 },
-      });
+    if (web3 && !loading && !loaded && !contract && wallets[0] && wallets[0].accounts) {
+      setLoading(true);
 
       const contractAddress = process.env.CONTRACT_ADDRESS;
-      const contract = new ethers.Contract(
+      contract = new ethers.Contract(
         contractAddress || "",
         ABI,
         web3.getSigner(wallets[0].accounts[0].address)
       );
+
       setHungry((await contract.getHungry()).toNumber() || 0);
       setTired((await contract.getTired()).toNumber() || 0);
       setBored((await contract.getBored()).toNumber() || 0);
       setDirty((await contract.getDirty()).toNumber() || 0);
+      setScore((await contract.love(wallets[0].accounts[0].address)).toNumber() || 0);
+      setLoaded(true)
+      setLoading(false);
     }
   }
 
@@ -79,7 +85,7 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
   }, [web3]);
 
   return (
-    <EboogotchiContext.Provider value={stats}>
+    <EboogotchiContext.Provider value={{ stats, loading , score}}>
       {children}
     </EboogotchiContext.Provider>
   );

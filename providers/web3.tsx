@@ -67,6 +67,7 @@ const Web3Provider: React.FC<{ children: any }> = ({ children }) => {
     if (wallets[0] && connectedChain?.id.toUpperCase() !== getChain()) {
       setChain({ chainId: process.env.CHAIN_ID ?? "0x1" });
     } else {
+      if(web3 === getWeb3(wallets[0])) return;
       setWeb3(getWeb3(wallets[0]));
       setAlchemy(
         getWeb3(
@@ -75,7 +76,7 @@ const Web3Provider: React.FC<{ children: any }> = ({ children }) => {
         ) as ethers.providers.AlchemyWebSocketProvider
       );
     }
-  }, [wallets, connectedChain]);
+  }, [wallets]);
 
   function updateChainState() {
     if (!connectedChain) return;

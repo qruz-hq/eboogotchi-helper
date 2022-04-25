@@ -13,7 +13,7 @@ export default function Tutorial() {
           </h1>
           <p className="mt-8 text-xl text-gray-500 leading-8">
             Eboogotchi is an on-chain game where a single creature is controlled
-            by everyone and whose goal is to survive the longest. That said, one
+            by everyone and whose goal is to survive the longest. That said, once
             the eboogotchi dies, a lucky winner will be randomly drawn to win
             Eboo #700.
           </p>

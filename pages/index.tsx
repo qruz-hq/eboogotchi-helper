@@ -13,7 +13,7 @@ export default function Eboogotchi() {
   }
 
   return (
-    <div className="flex flex-col gap-6 justify-center items-center w-screen min-h-screen">
+    <div className="flex flex-col gap-6 pt-6 justify-center items-center w-screen min-h-screen">
       <SpriteAnimator
         sprite="/images/eboogotchi.png"
         width={196}
@@ -23,6 +23,7 @@ export default function Eboogotchi() {
         frameCount={2}
       />
       <State />
+      <a role={'button'} className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="https://www.eboosnft.com/eboogotchi">Play game</a>
       <Tutorial />
       <Footer />
     </div>
