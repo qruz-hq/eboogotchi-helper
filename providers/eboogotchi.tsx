@@ -62,7 +62,6 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
       });
 
       const contractAddress = process.env.CONTRACT_ADDRESS;
-      console.log("contractAddress", contractAddress);
       const contract = new ethers.Contract(
         contractAddress || "",
         ABI,
@@ -78,10 +77,6 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
   useEffect(() => {
     updateState();
   }, [web3]);
-
-  useEffect(() => {
-    console.log(stats);
-  }, [stats]);
 
   return (
     <EboogotchiContext.Provider value={stats}>

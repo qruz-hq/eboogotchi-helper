@@ -45,11 +45,11 @@ const navigation = [
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
-        stroke-width="2"
+        strokeWidth="2"
       >
         <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
         />
       </svg>
@@ -76,13 +76,13 @@ export default function Footer() {
         </div>
         <div className="mt-8 px-2 md:mt-0 md:order-1">
           <p className="text-center text-base text-gray-400">
-            Made with ❤️ by
+            Made with ❤️ by 
             <a
               href="http://twitter.com/0xqruz"
               target="_blank"
               className="text-indigo-600"
             >
-              0xQruz
+            {' '}qruz
             </a>
           </p>
         </div>

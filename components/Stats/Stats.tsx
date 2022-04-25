@@ -10,10 +10,9 @@ export default function Stats() {
         Stats
       </h3>
       <dl className={`mt-5 grid grid-cols-2 gap-5 sm:grid-cols-${Object.entries(stats).length}`}>
-        {Object.values(stats).map((item) => (
-          <>
+        {Object.values(stats).map((item, index) => (
             <div
-              key={item.name}
+              key={item.value+'-'+index}
               className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6"
             >
               <dt className="text-sm font-medium text-gray-500 truncate">
@@ -23,7 +22,6 @@ export default function Stats() {
                 {item.value}
               </dd>
             </div>
-          </>
         ))}
       </dl>
     </div>
