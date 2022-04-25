@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.2",
     "@web3-onboard/coinbase": "^2.0.0",
     "@web3-onboard/react": "^2.1.5",
     "@web3-onboard/walletconnect": "^2.0.1",
