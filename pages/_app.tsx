@@ -3,7 +3,7 @@ import EboogotchiProvider from "@/providers/eboogotchi";
 import Web3Provider from "@/providers/web3";
 import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
+function EboogotchiHelper({ Component , pageProps } : any) {
   useWalletInitializer();
   return (
     <Web3Provider>
@@ -14,4 +14,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default EboogotchiHelper;

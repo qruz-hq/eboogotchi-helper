@@ -67,7 +67,8 @@ export default function Footer() {
               key={item.name}
               href={item.href}
               className="text-gray-400 hover:text-gray-500"
-              target={"_blank"}
+              target="_blank"
+              rel="noreferrer"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />
@@ -76,13 +77,15 @@ export default function Footer() {
         </div>
         <div className="mt-8 px-2 md:mt-0 md:order-1">
           <p className="text-center text-base text-gray-400">
-            Made with ❤️ by 
+            Made with ❤️ by
             <a
               href="http://twitter.com/0xqruz"
               target="_blank"
+              rel="noreferrer"
               className="text-indigo-600"
             >
-            {' '}qruz
+              {" "}
+              qruz
             </a>
           </p>
         </div>
