@@ -1,11 +1,10 @@
-import Stats from "@/components/Stats/Stats";
 import EboogotchiStats from "interfaces/EboogotchiStats";
 import React, { useEffect, useContext } from "react";
 import { Web3Context } from "./web3";
 import { ethers } from "ethers";
 import { useSetChain, useWallets } from "@web3-onboard/react";
 import ABI from "@/artifacts/eboogotchi.json";
-import EboogotchiLeaderboard from "interfaces/EboogotchiLeaderBoard";
+import EboogotchiLeaderboard from "interfaces/EboogotchiLeaderboard";
 
 export const EboogotchiContext = React.createContext<{
   stats: EboogotchiStats;

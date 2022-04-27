@@ -43,7 +43,7 @@ export default function Leaderboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {leaderboard.sortLeaderboard().filter((_entry, i) => i < 10).map((entry, index) => (
+                  {leaderboard.sortLeaderboard().filter((_entry:any, i) => i < 10).map((entry, index) => (
                     <tr key={entry.address}>
                       <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">
                         {index + 1}
