@@ -27,15 +27,10 @@ export function getWeb3(
 }
 
 export const Web3Context = React.createContext<{
-  web3:
-    | ethers.providers.Web3Provider
-    | ethers.providers.JsonRpcProvider
-    | undefined;
   alchemy: ethers.providers.AlchemyWebSocketProvider | undefined;
   connectedToChain: boolean;
   settingChain: boolean;
 }>({
-  web3: undefined,
   alchemy: undefined,
   connectedToChain: false,
   settingChain: false,
@@ -67,8 +62,6 @@ const Web3Provider: React.FC<{ children: any }> = ({ children }) => {
     if (wallets[0] && connectedChain?.id.toUpperCase() !== getChain()) {
       setChain({ chainId: process.env.CHAIN_ID ?? "0x1" });
     } else {
-      if(web3 === getWeb3(wallets[0])) return;
-      setWeb3(getWeb3(wallets[0]));
       setAlchemy(
         getWeb3(
           undefined,
@@ -96,7 +89,7 @@ const Web3Provider: React.FC<{ children: any }> = ({ children }) => {
 
   return (
     <Web3Context.Provider
-      value={{ web3, alchemy, connectedToChain, settingChain }}
+      value={{ alchemy, connectedToChain, settingChain }}
     >
       {children}
     </Web3Context.Provider>

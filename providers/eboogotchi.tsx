@@ -5,16 +5,20 @@ import { Web3Context } from "./web3";
 import { ethers } from "ethers";
 import { useSetChain, useWallets } from "@web3-onboard/react";
 import ABI from "@/artifacts/eboogotchi.json";
+import EboogotchiLeaderboard from "interfaces/EboogotchiLeaderBoard";
 
 export const EboogotchiContext = React.createContext<{
   stats: EboogotchiStats;
+  leaderboard : EboogotchiLeaderboard;
   loading: boolean;
   score: number;
-}>({ stats: {}, loading: true , score: 0});
+}>({ stats: {}, leaderboard: new EboogotchiLeaderboard(), loading: true , score: 0});
 
 const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
-  const { web3 } = useContext(Web3Context);
+  const { alchemy } = useContext(Web3Context);
   let _buffer: EboogotchiStats;
+  let _leaderboard: EboogotchiLeaderboard = new EboogotchiLeaderboard();
+  let [leaderboard, setLeaderboard] = React.useState<EboogotchiLeaderboard>(_leaderboard);
   const [stats, setStats] = React.useState<EboogotchiStats>({});
   let contract: ethers.Contract;
   const [loading, setLoading] = React.useState(false);
@@ -60,21 +64,28 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
   }
 
   async function updateState() {
-    if (web3 && !loading && !loaded && !contract && wallets[0] && wallets[0].accounts) {
+    if (alchemy && !loading && !loaded && !contract) {
       setLoading(true);
 
       const contractAddress = process.env.CONTRACT_ADDRESS;
       contract = new ethers.Contract(
         contractAddress || "",
         ABI,
-        web3.getSigner(wallets[0].accounts[0].address)
+        alchemy
       );
 
       setHungry((await contract.getHungry()).toNumber() || 0);
       setTired((await contract.getTired()).toNumber() || 0);
       setBored((await contract.getBored()).toNumber() || 0);
       setDirty((await contract.getDirty()).toNumber() || 0);
+      if(wallets[0]) 
       setScore((await contract.love(wallets[0].accounts[0].address)).toNumber() || 0);
+
+      let eventFilter = contract.filters.Loved()
+      let events = await contract.queryFilter(eventFilter)
+      events.forEach( (event) => _leaderboard.addScore(event.args?.caretaker))
+      setLeaderboard(_leaderboard)
+
       setLoaded(true)
       setLoading(false);
     }
@@ -82,10 +93,10 @@ const EboogotchiProvider: React.FC<{ children: any }> = ({ children }) => {
 
   useEffect(() => {
     updateState();
-  }, [web3]);
+  }, [alchemy]);
 
   return (
-    <EboogotchiContext.Provider value={{ stats, loading , score}}>
+    <EboogotchiContext.Provider value={{ stats, leaderboard,  loading , score}}>
       {children}
     </EboogotchiContext.Provider>
   );
